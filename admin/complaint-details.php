@@ -90,7 +90,7 @@ while($row=$res->fetch_object())
 	  {
 	  	?>
 					<div class="col-md-12">
-						<h2 class="page-title" style="margin-top:3%">#<?php echo $row->ComplainNumber;?> Details</h2>
+						<h2 class="page-title">#<?php echo $row->ComplainNumber;?> Details</h2>
 						<div class="panel panel-default">
 							<div class="panel-heading">#<?php echo $row->ComplainNumber;?> Details</div>
 							<div class="panel-body">
@@ -101,7 +101,7 @@ while($row=$res->fetch_object())
 
 
 <tr>
-<td colspan="6" style="text-align:center; color:blue"><h4>Complaint Realted Info</h4></td>
+<td colspan="6" style="text-align:center; color:blue"><h4>Complaint Related Information</h4></td>
 </tr>
 <tr>
 	<th>Complaint Number </th>

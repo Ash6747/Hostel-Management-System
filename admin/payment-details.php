@@ -457,7 +457,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                             <input type="radio" value="0" name="remainingAmountCheckRefund" id="remainingAmountCheckRefundNo" hidden>
                         </div>
                         <p>
-                            <label for="refund" class="control-label">Refund : <span class="text-danger">*</span></label>
+                            <label for="refund" class="control-label">Refund<span class="text-danger">*</span> : </label>
                             <input type="number" name="refundAmount" id="refund" class="form-control">
                         </p>
                         <p>

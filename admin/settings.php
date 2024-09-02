@@ -102,16 +102,22 @@ if (isset($_POST['submit'])) {
                                             $buttonText = $row->enableOp ? 'Set Inactive' : 'Set Active';
                                             $buttonClass = $row->enableOp ? 'btn-success' : 'btn-warning';
                                             $checked = $row->enableOp ? 'checked' : '';
+                                            
+                                            // Conditional logic for hiding/showing date inputs
+                                            $dateFields = ($row->option == 'guest_room' || $row->option == 'feedback') 
+                                                ? "<td style='color: tomato'>Not Required</td><td>Not Required</td>" 
+                                                : "<td style='color: limegreen'>
+                                                        <input type='date' name='fromDate' class='form-control' value='$row->fromDate' required>
+                                                   </td>
+                                                   <td style='color: tomato'>
+                                                        <input type='date' name='toDate' class='form-control' value='$row->toDate' required>
+                                                   </td>";
+                                        
                                             echo "<tr style='font-weight: 700;'>
                                                     <form action='' method='post'>
                                                         <td>$cnt</td>
                                                         <td>$row->option</td>
-                                                        <td style='color: limegreen'>
-                                                            <input type='date' name='fromDate' class='form-control' value='$row->fromDate' required>
-                                                        </td>
-                                                        <td style='color: tomato'>
-                                                            <input type='date' name='toDate' class='form-control' value='$row->toDate' required>
-                                                        </td>
+                                                        $dateFields
                                                         <td>
                                                             <input type='checkbox' name='enableOp' $checked>
                                                         </td>
@@ -122,7 +128,32 @@ if (isset($_POST['submit'])) {
                                                     </form>
                                                   </tr>";
                                             $cnt++;
-                                        }
+                                        }                                        
+                                        // while ($row = $res->fetch_object()) {
+                                        //     $buttonText = $row->enableOp ? 'Set Inactive' : 'Set Active';
+                                        //     $buttonClass = $row->enableOp ? 'btn-success' : 'btn-warning';
+                                        //     $checked = $row->enableOp ? 'checked' : '';
+                                        //     echo "<tr style='font-weight: 700;'>
+                                        //             <form action='' method='post'>
+                                        //                 <td>$cnt</td>
+                                        //                 <td>$row->option</td>
+                                        //                 <td style='color: limegreen'>
+                                        //                     <input type='date' name='fromDate' class='form-control' value='$row->fromDate' required>
+                                        //                 </td>
+                                        //                 <td style='color: tomato'>
+                                        //                     <input type='date' name='toDate' class='form-control' value='$row->toDate' required>
+                                        //                 </td>
+                                        //                 <td>
+                                        //                     <input type='checkbox' name='enableOp' $checked>
+                                        //                 </td>
+                                        //                 <td>
+                                        //                     <input type='hidden' name='option' value='$row->option'>
+                                        //                     <button type='submit' name='submit' class='btn $buttonClass'>Update</button>
+                                        //                 </td>
+                                        //             </form>
+                                        //           </tr>";
+                                        //     $cnt++;
+                                        // }
                                         $stmt->close();
                                         ?>
                                     </tbody>

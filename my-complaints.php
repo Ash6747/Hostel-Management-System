@@ -2,18 +2,19 @@
 session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
+include('includes/enc.php');
 check_login();
 check_status();
 
 if(isset($_GET['del']))
 {
-	$id=intval($_GET['del']);
+	$id=intval(decrypt($_GET['del']));
 	$adn="delete from complaints where id=?";
-		$stmt= $mysqli->prepare($adn);
-		$stmt->bind_param('i',$id);
-        $stmt->execute();
-        $stmt->close();	   
-        echo "<script>alert('Data Deleted');</script>" ;
+	$stmt= $mysqli->prepare($adn);
+	$stmt->bind_param('i',$id);
+	$stmt->execute();
+	$stmt->close();	   
+	echo "<script>alert('Data Deleted');</script>" ;
 }
 ?>
 <!doctype html>
@@ -109,12 +110,12 @@ endif;
 <td><?php echo $row->registrationDate;?></td>
 
 <td>
-<a href="complaint-details.php?cid=<?php echo $row->id;?>" title="View Full Details"><i class="fa fa-desktop"></i></a>&nbsp;&nbsp;
+<a href="complaint-details.php?cid=<?php echo encrypt($row->id);?>" title="View Full Details"><i class="fa fa-desktop"></i></a>&nbsp;&nbsp;
 <?php
-if($row->complaintType === "Room Transfer"){
+if($row->complaintType === "Room Transfer" && $row->complaintStatus == ""){
 ?>
 
-<a href="my-complaints.php?del=<?php echo $row->id;?>" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a>
+<a href="my-complaints.php?del=<?php echo encrypt($row->id);?>" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a>
 <?php
 }?>
 </td>

@@ -2,6 +2,7 @@
 session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
+include('includes/enc.php');
 check_login();
 check_status();
 
@@ -52,7 +53,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                     <div class="row" id="print">
                         <?php	
 
-                            $cid=$_GET['guid'];
+                            $cid=decrypt($_GET['guid']);
                             $user=$_SESSION['userPrn'];
                             // $ret="SELECT * FROM guest_gatepass WHERE id =? AND userPrn=?";
                             $ret="SELECT sg.*, r.firstName, r.middleName, r.lastName, r.class, r.hostelName, r.clgName FROM student_gatepass sg LEFT JOIN registration r ON sg.userPrn = r.userPrn WHERE sg.id = ?";
@@ -66,7 +67,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 // SELECT `id`, `guest_name`, `guestIdFile`, `guestCount`, `userPrn`, `reason`, `visit_date`, `visit_time`, `in_date`, `in_time` FROM `guest_gatepass` WHERE 1
                             ?>
                             <div class="col-md-12">
-                                <h2 class="page-title" style="margin-top:3%">Hostel Entry Detail</h2>
+                                <h2 class="page-title" style="margin-top:3%">Hostel Entry Details</h2>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Hostel :<?php echo $row->hostelName;?> </div>
                                     <div class="panel-body">
@@ -77,7 +78,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 
 
                                         <tr>
-                                        <td colspan="6" style="text-align:center; color:blue"><h4>Student Realted Info</h4></td>
+                                        <td colspan="6" style="text-align:center; color:blue"><h4>Student Related Information</h4></td>
                                         </tr>
 
                                         <tr>
@@ -87,7 +88,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                         <tr>
                                             <th>Full name: </th>
                                             <td><?php echo $row->firstName." ".$row->middleName." ".$row->lastName;?></td>
-                                            <th>Student regNo: </th>
+                                            <th>Student UserPrn: </th>
                                             <td><?php echo $row->userPrn;?></td>
                                         </tr>
                                         <tr>

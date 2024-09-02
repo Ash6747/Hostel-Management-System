@@ -74,7 +74,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 
 
                                         <tr>
-                                        <td colspan="6" style="text-align:center; color:blue"><h4>Transaction Realted Information</h4></td>
+                                        <td colspan="6" style="text-align:center; color:blue"><h4>Transaction Related Information</h4></td>
                                         </tr>
 
                                         <tr>

@@ -8,172 +8,175 @@ check_login();
 
 if (isset($_POST['submit'])) {
     // Posted Values
-    $statusUpdationDate = date('Y-m-d H:i:s');
-    $id=$_SESSION['adminId'];
-    $receiptFileCheck = $_POST['receiptFileCheck'];
-    $payTypeCheck = $_POST['payTypeCheck'];
-    $paidAmountCheck = $_POST['paidAmountCheck'];
-    $receiptTokenidCheck = $_POST['receiptTokenidCheck'];
-    $paymentDateCheck = $_POST['paymentDateCheck'];
-    $alluserDetailsCheck = $_POST['alluserDetailsCheck'];
-    $remark = $_POST['remark'];    
-    $transactionId = $_POST['transactionId'];
+    if($_POST['status'] == 'pending'){   
+        $statusUpdationDate = date('Y-m-d H:i:s');
+        $id=$_SESSION['adminId'];
+        $receiptFileCheck = $_POST['receiptFileCheck'];
+        $payTypeCheck = $_POST['payTypeCheck'];
+        $paidAmountCheck = $_POST['paidAmountCheck'];
+        $receiptTokenidCheck = $_POST['receiptTokenidCheck'];
+        $paymentDateCheck = $_POST['paymentDateCheck'];
+        $alluserDetailsCheck = $_POST['alluserDetailsCheck'];
+        $remark = $_POST['remark'];    
+        $transactionId = $_POST['transactionId'];
 
-    
-    
-    
+        
+        
+        
 
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
+        if ($mysqli->connect_error) {
+            die("Connection failed: " . $mysqli->connect_error);
+        }
 
-    $checkQuery = "SELECT * FROM transactionhistory WHERE transactionId=?";
-    $checkStmt = $mysqli->prepare($checkQuery);
-    $checkStmt->bind_param('i', $transactionId);
-    $checkStmt->execute();
-    $res = $checkStmt->get_result();
+        $checkQuery = "SELECT * FROM transactionhistory WHERE transactionId=?";
+        $checkStmt = $mysqli->prepare($checkQuery);
+        $checkStmt->bind_param('i', $transactionId);
+        $checkStmt->execute();
+        $res = $checkStmt->get_result();
 
-    if ($res->num_rows > 0) {
-        $row = $res->fetch_assoc();
-        $userPrn = $row['userPrn'];
-        $academicYear = $row['academicYear'];
-        $paidAmount = $row['paidAmount'];
-        $status = $row['status'];
-        $receiptTokenId = $row['receiptTokenId'];
-        $paymentDate = $row['paymentDate'];
+        if ($res->num_rows > 0) {
+            $row = $res->fetch_assoc();
+            $userPrn = $row['userPrn'];
+            $academicYear = $row['academicYear'];
+            $paidAmount = $row['paidAmount'];
+            $status = $row['status'];
+            $receiptTokenId = $row['receiptTokenId'];
+            $paymentDate = $row['paymentDate'];
 
-        if($status == 'rejected'){
-            echo "<script>alert(`Rejected transaction can not verified`);</script>";
-        }else{
-            $checkUserQuery = "SELECT * FROM report WHERE userPrn=? AND academicYear=?";
-            $userStmt = $mysqli->prepare($checkUserQuery);
-            $userStmt->bind_param('ss', $userPrn, $academicYear);
-            $userStmt->execute();
-            $userRes = $userStmt->get_result();
-            // SELECT `reportID`, `stayFrom`, `receiptTokenId`, `reportTotalAmount`, `receiptFile`, `class`, `fullName`, `userPrn`, `emailid`, `contactno`, `roomno`, `roomFeesphy`, `paymentType`, `academicYear`, `paymentStatus`, `status`, `skimAmount`, `comment`, `remainingAmountCheck`, `remainingAmount`, `verifiedBy`, `clgName`, `hostelName`, `seatsAvaibility`, `occupiedSeats`, `statusUpdationDate` FROM `report` WHERE 1
-            if ($userRes->num_rows > 0) {
-                $userRow = $userRes->fetch_assoc();
-                $totalPaidAmount = $userRow['reportTotalAmount'];
-                $paymentStatus = $userRow['paymentStatus'];
-                $roomFeesphy = $userRow['roomFeesphy'];
-                $remainingAmount = $userRow['remainingAmount'];
-                $emailid = $userRow['emailid'];
-                $fullName = $userRow['fullName'];
-                $clgName = $userRow['clgName'];
+            if($status == 'rejected'){
+                echo "<script>alert(`Rejected transaction can not verified`);</script>";
+            }else{
+                $checkUserQuery = "SELECT * FROM report WHERE userPrn=? AND academicYear=?";
+                $userStmt = $mysqli->prepare($checkUserQuery);
+                $userStmt->bind_param('ss', $userPrn, $academicYear);
+                $userStmt->execute();
+                $userRes = $userStmt->get_result();
+                // SELECT `reportID`, `stayFrom`, `receiptTokenId`, `reportTotalAmount`, `receiptFile`, `class`, `fullName`, `userPrn`, `emailid`, `contactno`, `roomno`, `roomFeesphy`, `paymentType`, `academicYear`, `paymentStatus`, `status`, `skimAmount`, `comment`, `remainingAmountCheck`, `remainingAmount`, `verifiedBy`, `clgName`, `hostelName`, `seatsAvaibility`, `occupiedSeats`, `statusUpdationDate` FROM `report` WHERE 1
+                if ($userRes->num_rows > 0) {
+                    $userRow = $userRes->fetch_assoc();
+                    $totalPaidAmount = $userRow['reportTotalAmount'];
+                    $paymentStatus = $userRow['paymentStatus'];
+                    $roomFeesphy = $userRow['roomFeesphy'];
+                    $remainingAmount = $userRow['remainingAmount'];
+                    $emailid = $userRow['emailid'];
+                    $fullName = $userRow['fullName'];
+                    $clgName = $userRow['clgName'];
 
-                if ($status == 'pending') {
-                    if ($receiptFileCheck == 1 && $payTypeCheck == 1 && $paidAmountCheck == 1 && $receiptTokenidCheck == 1 && $paymentDateCheck == 1 && $alluserDetailsCheck == 1) {
-                        $status = 'verified';
-                        $totalPaidAmount += $paidAmount;
-                        
-                    } else {
-                        $status = 'rejected';
-                    }
-
-                }elseif($status == 'verified') {
-                    if ($receiptFileCheck == 1 && $payTypeCheck == 1 && $paidAmountCheck == 1 && $receiptTokenidCheck == 1 && $paymentDateCheck == 1 && $alluserDetailsCheck == 1) {
-                        $status = 'verified';
-                    } else {
-                        $status = 'rejected';
-                        $totalPaidAmount -= $paidAmount;
-                    }
-                }
-
-                // if ($status == "verified") {
-                //     $totalPaidAmount += $paidAmount;
-                // } elseif($status == "rejected") {
-                //     $totalPaidAmount -= $paidAmount;
-                // }
-                // if($totalPaidAmount < 0){
-                //     $totalPaidAmount = 0;
-                // }
-
-                $remainingAmount = $roomFeesphy - $totalPaidAmount;
-
-                if($totalPaidAmount <= 0){
-                    $paymentStatus = "Not Paid";
-                }elseif ($totalPaidAmount < $roomFeesphy) {
-                    $paymentStatus = "Partially Paid";
-                }elseif ($totalPaidAmount == $roomFeesphy) {
-                    $paymentStatus = "Full Paid";
-                }elseif ($totalPaidAmount > $roomFeesphy) {
-                    $paymentStatus = "Over Paid";
-                }
-
-                if($totalPaidAmount > $roomFeesphy){
-                    echo "<script>alert('Student transaction getting over paid check all transactions of student');</script>";
-                }else{
-                    $userQuery = "UPDATE report SET  reportTotalAmount=?, paymentStatus=?, remainingAmount=? WHERE userPrn=? AND academicYear=?";
-                    $userStmt = $mysqli->prepare($userQuery);
-                    $userStmt->bind_param('dsdss',$totalPaidAmount, $paymentStatus, $remainingAmount, $userPrn, $academicYear);
-                    if ($userStmt->execute()) {
-                        unset($_POST);
-                        $_POST = array();
-                        echo "<script>alert('Total payment for academicYear " . $academicYear . " is " . $paymentStatus . " of student RegNo." . $userPrn . " successfully');</script>";
-                    }
-                    $updateQuery = "UPDATE transactionhistory SET  status=?, comment=?, paymentDateCheck=?, receiptTokenidCheck=?, paidAmountCheck=?, receiptFileCheck=?, alluserDetailsCheck=?, payTypeCheck=?, verifiedBy=?, statusUpdationDate=? WHERE transactionId=?";
-                    $updateStmt = $mysqli->prepare($updateQuery);
-                    $updateStmt->bind_param('ssiiiiiiisi', $status, $remark, $paymentDateCheck, $receiptTokenidCheck, $paidAmountCheck, $receiptFileCheck, $alluserDetailsCheck, $payTypeCheck, $id, $statusUpdationDate, $transactionId);
-                    if ($updateStmt->execute()) {
-                        $subject = "Transaction Declined - $receiptTokenId";
-                        $body = "<p><strong>Subject:</strong> Transaction Declined - $receiptTokenId</p>  
-                                    <p>Dear $fullName,</p>
-                                    <p>We regret to inform you that your recent transaction could not be processed.</p>
-                                    <p><strong>Transaction Details:</strong></p>
-                                    <ul>
-                                        <li><strong>Transaction ID:</strong> $receiptTokenId</li>
-                                        <li><strong>Amount:</strong> $paidAmount</li>
-                                        <li><strong>Date:</strong> $paymentDate</li>
-                                    </ul>
-                                    <p>Possible reasons for the decline could include insufficient funds, incorrect payment details, or issues with your bank. We recommend you review the information provided and attempt the transaction again.</p>
-                                    <p>We apologize for any inconvenience this may have caused.</p>
-                                    <p>Best regards,<br>
-                                    Stay Easy<br>
-                                    Stay Safe Stay Comfortable<br>
-                                    $clgName</p>";
-                        if($status == 'verified'){
-                            $subject = "Transaction Confirmation - $receiptTokenId";
-                            $body = "<p><strong>Subject:</strong> Transaction Confirmation - $receiptTokenId</p>
-                                    <p>Dear $fullName,</p>
-                                    <p>We are pleased to inform you that your recent transaction has been successfully processed.</p>
-                                    <p><strong>Transaction Details:</strong></p>
-                                    <ul>
-                                        <li><strong>Transaction ID:</strong> $receiptTokenId</li>
-                                        <li><strong>Amount:</strong> $paidAmount</li>
-                                        <li><strong>Date:</strong> $paymentDate</li>
-                                    </ul>
-                                    <p>Thank you for your business!</p>
-                                    <p>Best regards,<br>
-                                    Stay Easy<br>
-                                    Stay Safe Stay Comfortable<br>
-                                    $clgName</p>";
+                    if ($status == 'pending') {
+                        if ($receiptFileCheck == 1 && $payTypeCheck == 1 && $paidAmountCheck == 1 && $receiptTokenidCheck == 1 && $paymentDateCheck == 1 && $alluserDetailsCheck == 1) {
+                            $status = 'verified';
+                            $totalPaidAmount += $paidAmount;
+                            
+                        } else {
+                            $status = 'rejected';
                         }
 
-                        $recipientName = $fullName;
-                        $recipientEmail = $emailid;
-                        $altBody = '';
-                        $bcc = "";
-                        $cc = "";
-                        if(newMail($recipientName, $recipientEmail, $subject, $body, $altBody, $cc, $bcc)){
+                    }elseif($status == 'verified') {
+                        if ($receiptFileCheck == 1 && $payTypeCheck == 1 && $paidAmountCheck == 1 && $receiptTokenidCheck == 1 && $paymentDateCheck == 1 && $alluserDetailsCheck == 1) {
+                            $status = 'verified';
+                        } else {
+                            $status = 'rejected';
+                            $totalPaidAmount -= $paidAmount;
+                        }
+                    }
+
+                    // if ($status == "verified") {
+                    //     $totalPaidAmount += $paidAmount;
+                    // } elseif($status == "rejected") {
+                    //     $totalPaidAmount -= $paidAmount;
+                    // }
+                    // if($totalPaidAmount < 0){
+                    //     $totalPaidAmount = 0;
+                    // }
+
+                    $remainingAmount = $roomFeesphy - $totalPaidAmount;
+
+                    if($totalPaidAmount <= 0){
+                        $paymentStatus = "Not Paid";
+                    }elseif ($totalPaidAmount < $roomFeesphy) {
+                        $paymentStatus = "Partially Paid";
+                    }elseif ($totalPaidAmount == $roomFeesphy) {
+                        $paymentStatus = "Full Paid";
+                    }elseif ($totalPaidAmount > $roomFeesphy) {
+                        $paymentStatus = "Over Paid";
+                    }
+
+                    if($totalPaidAmount > $roomFeesphy){
+                        echo "<script>alert('Student transaction getting over paid check all transactions of student');</script>";
+                    }else{
+                        $userQuery = "UPDATE report SET  reportTotalAmount=?, paymentStatus=?, remainingAmount=? WHERE userPrn=? AND academicYear=?";
+                        $userStmt = $mysqli->prepare($userQuery);
+                        $userStmt->bind_param('dsdss',$totalPaidAmount, $paymentStatus, $remainingAmount, $userPrn, $academicYear);
+                        if ($userStmt->execute()) {
                             unset($_POST);
                             $_POST = array();
-                            echo "<script>alert('Receipt " . $status . " successfully');</script>";
+                            echo "<script>alert('Total payment for academicYear " . $academicYear . " is " . $paymentStatus . " of student RegNo." . $userPrn . " successfully');</script>";
                         }
+                        $updateQuery = "UPDATE transactionhistory SET  status=?, comment=?, paymentDateCheck=?, receiptTokenidCheck=?, paidAmountCheck=?, receiptFileCheck=?, alluserDetailsCheck=?, payTypeCheck=?, verifiedBy=?, statusUpdationDate=? WHERE transactionId=?";
+                        $updateStmt = $mysqli->prepare($updateQuery);
+                        $updateStmt->bind_param('ssiiiiiiisi', $status, $remark, $paymentDateCheck, $receiptTokenidCheck, $paidAmountCheck, $receiptFileCheck, $alluserDetailsCheck, $payTypeCheck, $id, $statusUpdationDate, $transactionId);
+                        if ($updateStmt->execute()) {
+                            $subject = "Transaction Declined - $receiptTokenId";
+                            $body = "<p><strong>Subject:</strong> Transaction Declined - $receiptTokenId</p>  
+                                        <p>Dear $fullName,</p>
+                                        <p>We regret to inform you that your recent transaction could not be processed.</p>
+                                        <p><strong>Transaction Details:</strong></p>
+                                        <ul>
+                                            <li><strong>Transaction ID:</strong> $receiptTokenId</li>
+                                            <li><strong>Amount:</strong> $paidAmount</li>
+                                            <li><strong>Date:</strong> $paymentDate</li>
+                                        </ul>
+                                        <p>Possible reasons for the decline could include insufficient funds, incorrect payment details, or issues with your bank. We recommend you review the information provided and attempt the transaction again.</p>
+                                        <p>We apologize for any inconvenience this may have caused.</p>
+                                        <p>Best regards,<br>
+                                        Stay Easy<br>
+                                        Stay Safe Stay Comfortable<br>
+                                        $clgName</p>";
+                            if($status == 'verified'){
+                                $subject = "Transaction Confirmation - $receiptTokenId";
+                                $body = "<p><strong>Subject:</strong> Transaction Confirmation - $receiptTokenId</p>
+                                        <p>Dear $fullName,</p>
+                                        <p>We are pleased to inform you that your recent transaction has been successfully processed.</p>
+                                        <p><strong>Transaction Details:</strong></p>
+                                        <ul>
+                                            <li><strong>Transaction ID:</strong> $receiptTokenId</li>
+                                            <li><strong>Amount:</strong> $paidAmount</li>
+                                            <li><strong>Date:</strong> $paymentDate</li>
+                                        </ul>
+                                        <p>Thank you for your business!</p>
+                                        <p>Best regards,<br>
+                                        Stay Easy<br>
+                                        Stay Safe Stay Comfortable<br>
+                                        $clgName</p>";
+                            }
+
+                            $recipientName = $fullName;
+                            $recipientEmail = $emailid;
+                            $altBody = '';
+                            $bcc = "";
+                            $cc = "";
+                            if(newMail($recipientName, $recipientEmail, $subject, $body, $altBody, $cc, $bcc)){
+                                unset($_POST);
+                                $_POST = array();
+                                echo "<script>alert('Receipt " . $status . " successfully');</script>";
+                            }
+                        }
+
+                        $userStmt->close();
+                        $updateStmt->close();
                     }
-
-                    $userStmt->close();
-                    $updateStmt->close();
+                }else{
+                    echo "<script>alert('Student does not exist');</script>";
                 }
-            }else{
-                echo "<script>alert('Student does not exist');</script>";
             }
+        } else {
+            echo "<script>alert('Receipt does not exist');</script>";
         }
-    } else {
-        echo "<script>alert('Receipt does not exist');</script>";
-    }
 
-    $checkStmt->close();
-    
+        $checkStmt->close();
+    }else{
+        echo "<script>alert('Status can change when it is pending');</script>";
+    }
 }
 
 ?>

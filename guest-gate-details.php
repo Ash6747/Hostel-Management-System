@@ -2,6 +2,7 @@
 session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
+include('includes/enc.php');
 check_login();
 check_status();
 
@@ -52,7 +53,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                     <div class="row" id="print">
                         <?php	
 
-                            $cid=$_GET['guid'];
+                            $cid=decrypt($_GET['guid']);
                             $user=$_SESSION['userPrn'];
                             // $ret="SELECT * FROM guest_gatepass WHERE id =? AND userPrn=?";
                             $ret="SELECT sg.*, r.firstName, r.middleName, r.lastName, r.class, r.hostelName, r.clgName FROM guest_gatepass sg LEFT JOIN registration r ON sg.userPrn = r.userPrn WHERE sg.id = ?";
@@ -78,7 +79,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 
 
                                         <tr>
-                                        <td colspan="6" style="text-align:center; color:blue"><h4>Visitor Realted Info</h4></td>
+                                        <td colspan="6" style="text-align:center; color:blue"><h4>Visitor Related Information</h4></td>
                                         </tr>
 
                                         <tr>
@@ -104,7 +105,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                         <tr>
                                             <th>Full name: </th>
                                             <td><?php echo $row->firstName." ".$row->middleName." ".$row->lastName;?></td>
-                                            <th>Student regNo: </th>
+                                            <th>Student UserPrn: </th>
                                             <td><?php echo $row->userPrn;?></td>
                                         </tr>
                                         <tr>

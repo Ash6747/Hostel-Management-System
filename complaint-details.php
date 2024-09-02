@@ -2,6 +2,7 @@
 session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
+include('includes/enc.php');
 check_login();
 check_status();
 ?>
@@ -52,7 +53,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 
 <?php	
 $aid=$_SESSION['id'];
-$cid=$_GET['cid'];
+$cid=decrypt($_GET['cid']);
 $ret="select * from complaints where (id=? and userId=?)";
 $stmt= $mysqli->prepare($ret) ;
 $stmt->bind_param('is',$cid,$aid);
@@ -63,7 +64,7 @@ while($row=$res->fetch_object())
 	  {
 	  	?>
 					<div class="col-md-12">
-						<h2 class="page-title" style="margin-top:3%">#<?php echo $row->ComplainNumber;?> Details</h2>
+						<h2 class="page-title" >#<?php echo $row->ComplainNumber;?> Details</h2>
 						<div class="panel panel-default">
 							<div class="panel-heading">#<?php echo $row->ComplainNumber;?> Details</div>
 							<div class="panel-body">
@@ -74,7 +75,7 @@ while($row=$res->fetch_object())
 
 
 <tr>
-<td colspan="6" style="text-align:center; color:blue"><h4>Complaint Realted Info</h4></td>
+<td colspan="6" style="text-align:center; color:blue"><h4>Complaint Related Information</h4></td>
 </tr>
 <tr>
 	<th>Complaint Number </th>

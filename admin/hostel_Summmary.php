@@ -52,52 +52,69 @@ check_login();
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = "SELECT 
-                                                    h.hostelName, 
-                                                    h.active,
-                                                    SUM(r.seater) AS HostelCapacity, 
-                                                    SUM(r.occupiedSeats) AS OccupiedRooms, 
-                                                    COUNT(r.room_no) AS TotalRooms, 
-                                                    SUM(r.seater - r.occupiedSeats) AS EmptyRooms 
-                                                  FROM 
-                                                    hostel h
-                                                  LEFT JOIN 
-                                                    rooms r 
-                                                  ON 
-                                                    r.hostelName = h.hostelName
-                                                  GROUP BY 
-                                                    h.hostelName, h.active";
-                                        $stmt = $mysqli->prepare($query);
-                                        $stmt->execute();
-                                        $stmt->bind_result($hostelName, $active, $HostelCapacity, $OccupiedRooms, $TotalRooms, $EmptyRooms);
+                                            // Initialize variables
+                                            $totalRooms = 0;
+                                            $totalCapacity = 0;
+                                            $totalOccupied = 0;
+                                            $totalEmpty = 0;
 
-                                        while ($stmt->fetch()) {
-                                            $buttonText = $active ? 'Set Inactive' : 'Set Active';
-                                            $buttonClass = $active ? 'btn-success' : 'btn-warning';
-                                            $totalCapacity = $totalCapacity + $HostelCapacity;
-                                            $totalOccupied = $totalOccupied + $OccupiedRooms;
-                                            $totalRooms = $totalRooms + $TotalRooms;
-                                            $totalEmpty = $totalEmpty + $EmptyRooms;
-                                            echo "<tr style='font-weight: 700;'>
-                                                    <td>$hostelName</td>
-                                                    <td>$TotalRooms</td>
-                                                    <td>$HostelCapacity</td>
-                                                    <td style='color: limegreen'>$OccupiedRooms</td>
-                                                    <td style='color: tomato'>$EmptyRooms</td>
-                                                    <td>
-                                                        <button class='btn $buttonClass toggle-status' data-hostel='$hostelName' data-occupied='$OccupiedRooms' data-active='$active'>$buttonText</button>
-                                                    </td>
-                                                  </tr>";
-                                        }
-                                        $stmt->close();
+                                            // Query to get hostel details
+                                            $query = "SELECT 
+                                                        h.hostelName, 
+                                                        h.active, 
+                                                        COUNT(r.hostelName) AS room_count,
+                                                        SUM(r.seater) AS HostelCapacity,
+                                                        COUNT(rg.roomId) AS Occupied
+                                                    FROM 
+                                                        hostel h 
+                                                    LEFT JOIN 
+                                                        rooms r 
+                                                    ON 
+                                                        r.hostelName = h.hostelName 
+                                                    LEFT JOIN 
+                                                        registration rg 
+                                                    ON 
+                                                        r.id = rg.roomId AND rg.status = 'verified' 
+                                                    GROUP BY 
+                                                        h.hostelName";
+                                                    
+                                            $stmt = $mysqli->prepare($query);
+                                            $stmt->execute();
+                                            $stmt->bind_result($hostelName, $active, $TotalRooms, $HostelCapacity, $OccupiedRooms);
+
+                                            // Loop through the results
+                                            while ($stmt->fetch()) {
+                                                $buttonText = $active ? 'Set Inactive' : 'Set Active';
+                                                $buttonClass = $active ? 'btn-success' : 'btn-warning';
+                                                $EmptyRooms = $HostelCapacity - $OccupiedRooms;
+
+                                                // Accumulate totals
+                                                $totalRooms += $TotalRooms;
+                                                $totalCapacity += $HostelCapacity;
+                                                $totalOccupied += $OccupiedRooms;
+                                                $totalEmpty += $EmptyRooms;
+
+                                                echo "<tr style='font-weight: 700;'>
+                                                        <td>$hostelName</td>
+                                                        <td>$TotalRooms</td>
+                                                        <td>$HostelCapacity</td>
+                                                        <td style='color: limegreen'>$OccupiedRooms</td>
+                                                        <td style='color: tomato'>$EmptyRooms</td>
+                                                        <td>
+                                                            <button class='btn $buttonClass toggle-status' id='toggle-status-btn' data-hostel='$hostelName' data-occupied='$OccupiedRooms' data-active='$active' onclick='changeActive(this)'>$buttonText</button>
+                                                        </td>
+                                                    </tr>";
+                                            }
+
+                                            $stmt->close();
                                         ?>
                                         <tfoot>
                                             <tr>
                                                 <th style="font-weight: 700;">Total</th>
-                                                <th id="totalRooms"><?php echo $totalRooms?></th>
-                                                <th id="totalCapacity"><?php echo $totalCapacity?></th>
-                                                <th id="totalOccupied"><?php echo $totalOccupied?></th>
-                                                <th id="totalEmpty"><?php echo $totalEmpty?></th>
+                                                <th id="totalRooms"><?php echo $totalRooms ?></th>
+                                                <th id="totalCapacity"><?php echo $totalCapacity ?></th>
+                                                <th id="totalOccupied"><?php echo $totalOccupied ?></th>
+                                                <th id="totalEmpty"><?php echo $totalEmpty ?></th>
                                                 <th></th>
                                             </tr>
                                         </tfoot>
@@ -120,14 +137,13 @@ check_login();
     <script src="js/chartData.js"></script>
     <script src="js/main.js"></script>
     <script>
-    $(document).ready(function() {
-        $('.toggle-status').on('click', function() {
-            var hostelName = $(this).data('hostel');
-            var occupied = $(this).data('occupied');
-            var active = $(this).data('active');
-            var button = $(this);
+        function changeActive(val) {
+            var btn = val;
+            var hostelName = btn.getAttribute('data-hostel');
+            var occupied = parseInt(btn.getAttribute('data-occupied'));
+            var active = parseInt(btn.getAttribute('data-active'));
             
-
+            // Prevent status change if there are occupied seats
             if (occupied > 0) {
                 alert('Status cannot be changed. There are occupied seats.');
                 return;
@@ -136,20 +152,88 @@ check_login();
             $.ajax({
                 url: 'toggle_status.php',
                 type: 'POST',
-                data: {hostelName: hostelName},
+                data: { hostelName: hostelName },
                 success: function(response) {
-                    var newStatus = response == 1 ? 'Set Inactive' : 'Set Active';
-                    var newClass = response == 1 ? 'btn-success' : 'btn-warning';
-                    button.text(newStatus).removeClass('btn-success btn-warning').addClass(newClass);
-                    button.data('active', response);
-                    alert('The hostel is now ' + (response == 1 ? 'Active' : 'Inactive') + '.');
+                    try {
+                        // Trim any whitespace and check if the response is a number
+                        response = response.trim();
+                        var newStatus = parseInt(response);
+
+                        if (!isNaN(newStatus)) {
+                            // Update the button text and class based on the new status
+                            var buttonText = newStatus ? 'Set Inactive' : 'Set Active';
+                            var buttonClass = newStatus ? 'btn-success' : 'btn-warning';
+
+                            btn.textContent = buttonText;
+                            btn.classList.remove('btn-success', 'btn-warning');
+                            btn.classList.add(buttonClass);
+
+                            // Update the button's data-active attribute
+                            btn.setAttribute('data-active', newStatus);
+
+                            alert('The hostel is now ' + (newStatus ? 'Active' : 'Inactive') + '.');
+                        } else {
+                            alert('Error: Invalid response from server.');
+                        }
+                    } catch (e) {
+                        console.error('Error processing response:', e);
+                        alert('Error: Unable to update status.');
+                    }
                 },
                 error: function() {
                     alert('Error: Unable to update status.');
                 }
             });
-        });
-    });
+        }
+
+        // function changeActive(val) {
+        //     var btn = val;
+        //     console.log(val);
+        //     // Alternatively, using the dataset property
+        //     var hostelName = btn.dataset.hostel;
+        //     var occupied = btn.dataset.occupied;
+        //     var active = btn.dataset.active;
+
+        //     // console.log('Hostel Name:', hostelName);
+        //     // console.log('Occupied Rooms:', occupied);
+        //     // console.log('Active Status:', active);
+
+        //     if (occupied > 0) {
+        //         alert('Status cannot be changed. There are occupied seats.');
+        //         return;
+        //     }
+
+        //     $.ajax({
+        //         url: 'toggle_status.php',
+        //         type: 'POST',
+        //         data: {hostelName: hostelName},
+        //         success: function(response) {
+        //             // let temp = Number(response);
+        //             // console.log(temp);
+        //             console.log(typeof(response));
+        //             console.log(response);
+        //             if (active === '0') {
+        //                 btn.textContent = 'Set Inactive'; // Update the button text
+        //                 btn.classList.remove('btn-warning'); // Remove 'btn-warning' class
+        //                 btn.classList.add('btn-success'); // Add 'btn-success' class
+        //                 btn.setAttribute('data-active', '1'); // Update the data-active attribute
+        //                 alert('The hostel is now Active.');
+        //             } else if(active === '1') {
+        //                 btn.textContent = 'Set Active'; // Update the button text
+        //                 btn.classList.remove('btn-success'); // Remove 'btn-success' class
+        //                 btn.classList.add('btn-warning'); // Add 'btn-warning' class
+        //                 btn.setAttribute('data-active', '0'); // Update the data-active attribute
+        //                 alert('The hostel is now Inactive.');
+        //             }else{
+        //                 alert('Unable to update status.');
+        //             }
+        //         },
+        //         error: function() {
+        //             alert('Error: Unable to update status.');
+        //         }
+        //     });
+        // }
+
     </script>
 </body>
 </html>

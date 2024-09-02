@@ -2,19 +2,10 @@
 session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
+include('includes/enc.php');
 check_login();
 check_status();
 
-if(isset($_GET['del']))
-{
-	$id=intval($_GET['del']);
-	$adn="delete from complaints where id=?";
-		$stmt= $mysqli->prepare($adn);
-		$stmt->bind_param('i',$id);
-        $stmt->execute();
-        $stmt->close();	   
-        echo "<script>alert('Data Deleted');</script>" ;
-}
 ?>
 <!doctype html>
 <html lang="en" class="no-js">
@@ -92,7 +83,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 										<td><?php echo $row->visit_date." ".$row->visit_time;?></td>
 										<td><?php echo $row->leave_date." ".$row->leave_time;?></td>
 										<td>
-										<a href="guest-gate-details.php?guid=<?php echo $row->id;?>" title="View Full Details"><i class="fa fa-desktop"></i></a>
+										<a href="guest-gate-details.php?guid=<?php echo encrypt($row->id);?>" title="View Full Details"><i class="fa fa-desktop"></i></a>
 										</td>
 										</tr>
 									<?php
