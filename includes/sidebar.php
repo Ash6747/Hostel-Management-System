@@ -57,7 +57,7 @@
 		<li><a href="access-log.php"><i class="fa fa-bug"></i> Access log</a></li>
 		<!-- <li><a href="access-log.php"><i class="fa fa-file-o"></i> Access log</a></li> -->
 		<li><a href="my-profile.php"><i class="fa fa-user"></i> My Profile </a></li>
-		<li><a href="logout.php"><i class="fa fa-arrow-left"></i> Log Out </a></li>
+		<li><a href="logout.php"><i class="fa fa-sign-out"></i> Log Out </a></li>
 		<?php } else { ?>
 		
 		<li><a href="registration.php"><i class="fa fa-user-plus"></i>User Registration</a></li>

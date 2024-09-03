@@ -49,8 +49,9 @@
 			<li class="ts-account">
 				<a href="#" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
 				<ul > 
-					<li><a href="my-profile.php">My Account</a></li>
-					<li><a href="logout.php">Logout</a></li>
+					<li><a href="my-profile.php">My Account <i class="fa fa-user"></i></a></li>
+					<hr style="margin: 0 auto; width: 80%;">
+					<li><a href="logout.php">Logout <i class="fa fa-sign-out"></i></a></li>
 				</ul>
 			</li>
 		</ul>

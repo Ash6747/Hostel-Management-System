@@ -69,7 +69,7 @@
 				<li><a href="access-log.php"><i class="fa fa-file" ></i> User Access Logs</a></li>
 				<li><a href="notice.php"><i class="fa fa-envelope"></i>  Send Notice</a></li>
 				<li><a href="settings.php"><i class="fa fa-gear"></i>  Settings</a></li>
-				<li><a href="logout.php"><i class="fa fa-arrow-left"></i>  Log Out</a></li>
+				<li><a href="logout.php"><i class="fa fa-sign-out"></i>  Log Out</a></li>
 
 			
 		</nav>

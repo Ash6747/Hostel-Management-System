@@ -18,7 +18,7 @@ check_status();
 	<meta name="theme-color" content="#3e454c">
 	<link rel="icon" type="image/png" href="img/fav1.png">
 
-	<title>Payment Status</title>
+	<title>Payment Reports</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">

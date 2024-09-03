@@ -3,6 +3,16 @@
 /****************************
 *   FOR RESPONSIVENESS      *
 ****************************/
+
+body{
+  
+  /* color: #f7f7f7; */
+  /* background-color: #232d3b !important; */
+}
+body .panel{
+  color: #222;
+  background-color: cadetblue;
+}
 @media print {
   .action-column {
       display: none;

@@ -5,10 +5,10 @@
 			<ul class="ts-profile-nav">
 				<li class="ts-account">
 					<a href="#"><img src="img/software-engineer.png" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
-					<ul>
-						<li><a href="admin-profile.php">My Account</a></li>
-						<!-- <hr> -->
-						<li><a href="logout.php">Logout</a></li>
+					<ul style="border-radius: 0 0 15px 15px;">
+						<li><a href="admin-profile.php">My Account <i class="fa fa-user"></i></a></li>
+						<hr style="margin: 0 auto; width: 80%;">
+						<li><a href="logout.php">Logout <i class="fa fa-sign-out"></i></a></li>
 					</ul>
 				</li>
 			</ul>

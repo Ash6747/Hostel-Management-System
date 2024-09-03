@@ -4,8 +4,7 @@ include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
 //code for update email id
-if($_POST['update'])
-{
+if(isset($_POST['update'])){
 $email=$_POST['emailid'];
 $aid=$_SESSION['adminId'];
 $udate=date('Y-m-d');
@@ -16,8 +15,7 @@ $stmt->execute();
 echo"<script>alert('Email id has been successfully updated');</script>";
 }
 // code for change password
-if(isset($_POST['changepwd']))
-{
+if(isset($_POST['changepwd'])){
 	$op=$_POST['oldpassword'];
 	$np=$_POST['newpassword'];
 	$ai=$_SESSION['adminId'];
