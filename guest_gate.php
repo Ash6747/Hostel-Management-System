@@ -70,6 +70,8 @@ if(isset($_POST['submit']) && isset($_FILES['image'])){
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="theme-color" content="#3e454c">
+    <link rel="icon" type="image/png" href="img/fav1.png">
+
     <title>Guest Gate Pass Form</title>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">

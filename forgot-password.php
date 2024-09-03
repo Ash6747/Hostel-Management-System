@@ -55,6 +55,7 @@ if(isset($_POST['update']))
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<link rel="icon" type="image/png" href="img/fav1.png">
 
 	<title>User Forgot Password</title>
 
@@ -144,7 +145,7 @@ if(isset($_POST['update']))
 												</div>
 											</div>
 										</div>
-										<div class="col-md-8 col-md-offset-2">
+										<div class="col-md-8 col-md-offset-2" style="margin-top: 15px;">
 											<input type="submit" name="update" id="btn-in" class="btn btn-primary btn-block" value="update" disabled>
 										</div>
 									</div>

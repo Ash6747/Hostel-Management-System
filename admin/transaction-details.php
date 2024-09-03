@@ -186,6 +186,7 @@ if (isset($_POST['submit'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="theme-color" content="#3e454c">
+    <link rel="icon" type="image/png" href="../img/fav2.png">
     <title>Transaction Details</title>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">

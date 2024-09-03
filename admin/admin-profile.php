@@ -7,7 +7,7 @@ check_login();
 if($_POST['update'])
 {
 $email=$_POST['emailid'];
-$aid=$_SESSION['id'];
+$aid=$_SESSION['adminId'];
 $udate=date('Y-m-d');
 $query="update admin set email=?,updation_date=? where id=?";
 $stmt = $mysqli->prepare($query);
@@ -18,22 +18,22 @@ echo"<script>alert('Email id has been successfully updated');</script>";
 // code for change password
 if(isset($_POST['changepwd']))
 {
-  $op=$_POST['oldpassword'];
-  $np=$_POST['newpassword'];
-$ai=$_SESSION['id'];
-$udate=date('Y-m-d');
-	$sql="SELECT password FROM admin where password=?";
+	$op=$_POST['oldpassword'];
+	$np=$_POST['newpassword'];
+	$ai=$_SESSION['adminId'];
+	$udate=date('Y-m-d');
+	$sql="SELECT password FROM admin where adminid = ? AND password=?";
 	$chngpwd = $mysqli->prepare($sql);
-	$chngpwd->bind_param('s',$op);
+	$chngpwd->bind_param('is',$ai, $op);
 	$chngpwd->execute();
 	$chngpwd->store_result(); 
     $row_cnt=$chngpwd->num_rows;;
 	if($row_cnt>0)
 	{
-		$con="update admin set password=?,updation_date=?  where id=?";
-$chngpwd1 = $mysqli->prepare($con);
-$chngpwd1->bind_param('ssi',$np,$udate,$ai);
-  $chngpwd1->execute();
+		$con="update admin set password=?,updation_date=?  where adminid=?";
+	$chngpwd1 = $mysqli->prepare($con);
+	$chngpwd1->bind_param('ssi',$np,$udate,$ai);
+	$chngpwd1->execute();
 		$_SESSION['msg']="Password Changed Successfully !!";
 	}
 	else
@@ -53,6 +53,7 @@ $chngpwd1->bind_param('ssi',$np,$udate,$ai);
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
+	<link rel="icon" type="image/png" href="../img/fav2.png">
 	<title>Admin Profile</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -91,8 +92,8 @@ return true;
 					
 						<h2 class="page-title">Admin Profile</h2>
 	<?php	
-$aid=$_SESSION['id'];
-	$ret="select * from admin where id=?";
+$aid=$_SESSION['adminId'];
+	$ret="select * from admin where adminId=?";
 		$stmt= $mysqli->prepare($ret) ;
 	 $stmt->bind_param('i',$aid);
 	 $stmt->execute() ;//ok

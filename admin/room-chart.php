@@ -23,8 +23,8 @@ if (isset($_POST['filter'])) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	
-	<title>DashBoard</title>
+	<link rel="icon" type="image/png" href="../img/fav2.png">
+	<title>Room Chart</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
