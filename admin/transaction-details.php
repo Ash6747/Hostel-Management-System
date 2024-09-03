@@ -20,10 +20,6 @@ if (isset($_POST['submit'])) {
         $remark = $_POST['remark'];    
         $transactionId = $_POST['transactionId'];
 
-        
-        
-        
-
         if ($mysqli->connect_error) {
             die("Connection failed: " . $mysqli->connect_error);
         }

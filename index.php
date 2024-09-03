@@ -158,7 +158,7 @@
                     <div class="row">
                         <div class="col-12">
                         <hr class="mt-5 mb-4 border-secondary-subtle">
-                        <p class="m-0 text-secondary text-end">Don't remember password?<a href="forgot-password.php" target="blank" class="link-primary text-decoration-none">Forgate Password</a></p>
+                        <p class="m-0 text-secondary text-end">Don't remember password?<a href="forgot-password.php" target="blank" class="link-primary text-decoration-none">Forgote Password</a></p>
                         </div>
                     </div>
                     </div>
