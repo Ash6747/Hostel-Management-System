@@ -4,11 +4,11 @@
 *   FOR RESPONSIVENESS      *
 ****************************/
 
-body{
+/* body{
   
-  /* color: #f7f7f7; */
-  /* background-color: #232d3b !important; */
-}
+  color: #f7f7f7;
+  background-color: #232d3b !important;
+} */
 body .panel{
   color: #222;
   background-color: cadetblue;
