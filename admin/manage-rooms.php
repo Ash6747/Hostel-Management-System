@@ -161,6 +161,7 @@ if (isset($_POST['filter'])) {
     </div>
 
     <!-- Loading Scripts -->
+    <script type="" src="js/table2excel.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap-select.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
