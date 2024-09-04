@@ -13,6 +13,9 @@ body .panel{
   color: #222;
   background-color: cadetblue;
 }
+body .panel a{
+  color: #30393b !important;
+}
 @media print {
   .action-column {
       display: none;
@@ -871,4 +874,8 @@ li {
     33%  {background-position:    0% 33% ,100% 33% ,200% 33% }
     66%  {background-position: -100%  66%,0%   66% ,100% 66% }
     100% {background-position:    0% 100%,100% 100%,200% 100%}
+}
+
+#zctb_wrapper{
+  padding: 0 15px 0 15px;
 }

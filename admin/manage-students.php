@@ -151,7 +151,7 @@ if (isset($_POST['filter'])) {
 											<th>Student Name</th>
 											<th>User PRN</th>
 											<th>Hostel Name </th>
-											<th>room no  </th>
+											<th>Room no  </th>
 											<th>Seater </th>
 											<th>Staying From </th>
 											<th>Status</th>

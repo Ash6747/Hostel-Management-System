@@ -8,7 +8,7 @@ if(isset($_POST['update'])){
 $email=$_POST['emailid'];
 $aid=$_SESSION['adminId'];
 $udate=date('Y-m-d');
-$query="update admin set email=?,updation_date=? where id=?";
+$query="update admin set email=?,updation_date=? where adminid=?";
 $stmt = $mysqli->prepare($query);
 $rc=$stmt->bind_param('ssi',$email,$udate,$aid);
 $stmt->execute();
@@ -61,9 +61,11 @@ if(isset($_POST['changepwd'])){
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
-<script type="text/javascript">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+	<script type="text/javascript" src="js/validation.min.js"></script>
+	<script type="text/javascript">
+
 function valid()
 {
 

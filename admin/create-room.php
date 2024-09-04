@@ -64,8 +64,10 @@ if(isset($_POST['submit']))
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+	<script type="text/javascript" src="js/validation.min.js"></script>
+
 </head>
 <body>
 	<?php include('includes/header.php');?>
@@ -94,7 +96,7 @@ if(isset($_POST['submit']))
 											<div class="hr-dashed"></div>
 
 												<div class="form-group">
-												<label class="col-sm-2 control-label">Hostel Name<span class="text-danger">*</span> </label>
+												<label class="col-sm-2 control-label">Hostel Name<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 												<select class="form-control" id="hostelName" name="hostelName" onchange="setGender(this.value)" required> 
 												<option value="">Select Room</option>
@@ -115,7 +117,7 @@ if(isset($_POST['submit']))
 												<!-- <input type="text" id="hostelName" name="hostelName" hidden> -->
 
 												<div class="form-group">
-												<label class="col-sm-2 control-label">Select Seater<span class="text-danger">*</span> </label>
+												<label class="col-sm-2 control-label">Select Seater<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 												<Select name="seater" class="form-control" required>
 												<option value="">Select Seater</option>
@@ -129,14 +131,14 @@ if(isset($_POST['submit']))
 												</div>
 
 												<div class="form-group">
-												<label class="col-sm-2 control-label">Room No.<span class="text-danger">*</span></label>
+												<label class="col-sm-2 control-label">Room No.<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 												<input type="text" class="form-control" name="rmno" id="rmno" value="" required="required">
 												</div>
 												</div>
 
 												<div class="form-group">
-												<label class="col-sm-2 control-label">Fee(Per Student)<span class="text-danger">*</span> </label>
+												<label class="col-sm-2 control-label">Fee(Per Student)<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 												<input type="number" pattern="[0-9]" class="form-control" min="1" name="fee" id="fee" value="" required="required">
 												</div>
@@ -149,7 +151,7 @@ if(isset($_POST['submit']))
 												</div> -->
 												
 												<div class="form-group">
-												<label class="col-sm-2 control-label">Gender </label>
+												<label class="col-sm-2 control-label">Gender : </label>
 												<div class="col-sm-8">
 												<input type="text" class="form-control" name="gender" id="gender" readonly required="required">
 												</div>

@@ -53,8 +53,10 @@ if(isset($_POST['submit']))
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+	<script type="text/javascript" src="js/validation.min.js"></script>
+
 </head>
 <body>
 	<?php include('includes/header.php');?>
@@ -80,14 +82,14 @@ if(isset($_POST['submit']))
 										<form method="post" class="form-horizontal">
 
                                             <div class="form-group">
-                                            <label class="col-sm-2 control-label">Hostel Name</label>
+                                            <label class="col-sm-2 control-label">Hostel Name<span class="text-danger">*</span> : </label>
                                             <div class="col-sm-8">
                                             <input type="text" class="form-control" name="hostelName" id="hostelName" value="" required="required">
                                             </div>
                                             </div>
 
                                             <div class="form-group">
-                                            <label class="col-sm-2 control-label">Gender </label>
+                                            <label class="col-sm-2 control-label">Gender<span class="text-danger">*</span> : </label>
                                             <div class="col-sm-8">
                                             <select name="gender" class="form-control" required="required">
                                             <option value="">Select Gender</option>

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$aid=$_SESSION['id'];
+$aid=$_SESSION['adminId'];
 require_once("includes/config.php");
 
 // Old code for RoomNo check

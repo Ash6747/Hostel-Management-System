@@ -38,8 +38,10 @@ echo"<script>alert('Course has been added successfully');</script>";
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+	<script type="text/javascript" src="js/validation.min.js"></script>
+
 </head>
 <body>
 	<?php include('includes/header.php');?>
@@ -62,20 +64,20 @@ echo"<script>alert('Course has been added successfully');</script>";
 											
 											<div class="hr-dashed"></div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Code </label>
+												<label class="col-sm-2 control-label">Course Code<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 													<input type="text" value="" name="cc"  class="form-control" required> </div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Name (Short)</label>
+												<label class="col-sm-2 control-label">Course Name (Short)<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 												<input type="text" class="form-control" name="cns" id="cns" value="" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Name(Full)</label>
+												<label class="col-sm-2 control-label">Course Name(Full)<span class="text-danger">*</span> : </label>
 												<div class="col-sm-8">
 												<input type="text" class="form-control" name="cnf" value="" required>
 												</div>
