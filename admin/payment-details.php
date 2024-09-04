@@ -304,7 +304,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                 {
                             ?>
                             <div class="col-md-12">
-                                <h2 class="page-title" style="margin-top:3%">#<?php echo $row->userPrn;?> Details</h2>
+                                <h2 class="page-title" >#<?php echo $row->userPrn;?> Details</h2>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">#<?php echo $row->userPrn;?> Details</div>
                                     <div class="panel-body">
@@ -313,7 +313,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                                 <span style="float:left" ><i class="fa fa-print fa-2x" aria-hidden="true" OnClick="CallPrint(this.value)" style="cursor:pointer" title="Print the Report"></i></span>			
                                                 <tbody>
                                                     <tr>
-                                                    <td colspan="6" style="text-align:center; color:blue"><h4>Payment Status Overview</h4></td>
+                                                    <td colspan="6" style="text-align:center;"><h4>Payment Status Overview</h4></td>
                                                     </tr>
 
                                                     <tr>
@@ -393,7 +393,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                                             $stmtAdmin->close();
                                                         ?>
                                                         <tr>
-                                                        <td colspan="6" style="text-align:center; color:blue">Verified By</td>
+                                                        <td colspan="6" style="text-align:center;">Verified By</td>
                                                         </tr>
                                                                 <tr>
                                                                     <td><b>Admin Email:</b></td>
@@ -412,7 +412,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                                 <span class="error text-danger"></span>
                                                 <span class="text-muted charCount">200 characters remaining</span>
                                             </div>
-                                            <button type="button" class="btn btn-info subm" data-toggle="modal" data-target="#myModal">Refund</button>
+                                            <button type="button" class="btn btn-warning subm" data-toggle="modal" data-target="#myModal">Refund</button>
                                             <input type="submit" name="submit" value="Submit" class="btn btn-primary sub">
                                     </form>
                                 </div>

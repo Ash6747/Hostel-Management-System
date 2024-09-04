@@ -123,7 +123,7 @@ while($row=$res->fetch_object())
 
 
 <tr>
-<td colspan="6" style="text-align:center; color:blue"><h4>Complaint Realted Info</h4></td>
+<td colspan="6" style="text-align:center; color:blue"><h4>Complaint Related Information</h4></td>
 </tr>
 <tr>
 	<th>Complaint Number </th>
@@ -207,7 +207,7 @@ while($row1=$res1->fetch_object())
 
 
 <?php if($cstatus =='' || $cstatus =='In Process'):?>
-<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Take Action</button>
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Take Action</button>
 <?php endif;?>
 </div>
 </div>
@@ -264,7 +264,7 @@ while($row1=$res1->fetch_object())
 			</p>
 
         <p><textarea name="remark" id="remark" placeholder="Remark or Messgae" rows="6" class="form-control"></textarea></p>
-        <p><input type="submit" name="submit" Value="Submit" class="btn btn-primary"></p>
+        <p><input type="submit" name="submit" Value="Submit" class="btn btn-warning"></p>
       </div>
   </form>
       <div class="modal-footer">
@@ -291,11 +291,15 @@ $("[data-toggle=tooltip]").tooltip();
     });
 function CallPrint(strid) {
 var prtContent = document.getElementById("print");
+var btn = document.querySelector(".btn");
+btn.style.display = "none"
 var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
 WinPrint.document.write(prtContent.innerHTML);
 WinPrint.document.close();
 WinPrint.focus();
 WinPrint.print();
+btn.style.display = "inline-block"
+
 }
 </script>
 </body>

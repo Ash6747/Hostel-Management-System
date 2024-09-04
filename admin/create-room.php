@@ -26,11 +26,11 @@ if(isset($_POST['submit']))
 	if($row_cnt>0){
 		echo"<script>alert('Room alreadt exist');</script>";
 	}else{
-		echo $gender;
-		echo $fees;
-		echo $clgName;
-		echo $roomno;
-		echo $seater;
+		// echo $gender;
+		// echo $fees;
+		// echo $clgName;
+		// echo $roomno;
+		// echo $seater;
 		$occupiedSeats = 0;
 		$halfyearlyAmount = 0;
 // INSERT INTO `rooms`(`id`, `seater`, `room_no`, `yearlyFees`, `halfyearlyAmount`, `gender`, `posting_date`, `clgName`, `hostelName`, `seatsAvaibility`, `occupiedSeats`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]')

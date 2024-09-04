@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/regStyle.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-3/assets/css/registration-3.css">
-    <title>Document</title>
+    <title>Email Validate</title>
 </head>
 <body>
     <!-- Registration 3 - Bootstrap Brain Component -->

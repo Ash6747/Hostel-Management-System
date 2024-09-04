@@ -239,8 +239,8 @@ if (isset($_POST['submit'])) {
                                             <span style="float:left"><i class="fa fa-print fa-2x" aria-hidden="true" OnClick="CallPrint(this.value)" style="cursor:pointer" title="Print the Report"></i></span>
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="6" style="text-align:center; color:blue">
-                                                        <h4>Transaction Related Info</h4>
+                                                    <td colspan="6" style="text-align:center; ">
+                                                        <h4>Transaction Related Information</h4>
                                                     </td>
                                                 </tr>
 

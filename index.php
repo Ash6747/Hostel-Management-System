@@ -9,7 +9,7 @@
         $username=$_POST['emailreg'];
         $password=$_POST['password'];
         // SELECT `adminid`, `username`, `email`, `password`, `reg_date`, `updation_date`, `access`, `adminName`, `clgName` FROM `admin` WHERE 1
-        $stmt=$mysqli->prepare("SELECT username,email,password,adminid,clgName FROM admin WHERE (userName=? OR email=?) AND password=? ");
+        $stmt=$mysqli->prepare("SELECT username,email,password,adminid,clgName FROM admin WHERE (userName=? OR email=?) AND password=? AND access = 1 ");
         $stmt->bind_param('sss',$username,$username,$password);
         if($stmt->execute()){
             $stmt -> bind_result($username,$email,$password,$adminid, $clgName );
@@ -109,7 +109,7 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-3/assets/css/registration-3.css">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
     <!-- Registration 3 - Bootstrap Brain Component -->
